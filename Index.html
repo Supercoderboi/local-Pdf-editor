@@ -566,8 +566,7 @@ input[type=file] {
 
         const page = output.addPage([W, H]);
         const image = await output.embedPng(item.data);
-        page.moveTo(W/2, H/2);
-        page.drawText(i.toString());
+
         const rotation = (item.rotation % 360 + 360) % 360;
 
         const boxW = W - 2 * margin;
@@ -610,6 +609,10 @@ input[type=file] {
           height: drawH,
           rotate: degrees(rotation)
         });
+        if(printPage == true){
+            page.moveTo(W/2, H/2);
+            //bruh this page numba is annoying 
+            page.drawText(i.toString());
       }
 
       const bytes = await output.save();
