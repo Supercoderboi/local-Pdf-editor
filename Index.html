@@ -547,7 +547,7 @@ input[type=file] {
     try {
       const { PDFDocument, degrees } = PDFLib;
       const output = await PDFDocument.create();
-      const printPage= document.getElementById("usePageNumber");
+      const printPage = $("usePageNumber").checked;
       const option = $("paper").value;
       const landscape = option.endsWith("L");
       const letter = option.startsWith("Letter");
@@ -609,10 +609,19 @@ input[type=file] {
           height: drawH,
           rotate: degrees(rotation)
         });
-        if(printPage == true){
-            page.moveTo(W/2, H/2);
-            //bruh this page numba is annoying 
-            page.drawText(i.toString());
+        if (printPage) {
+  const pageNumber = String(i + 1);
+  const fontSize = 12;
+
+  const textWidth = pageNumber.length * fontSize * 0.5;
+
+  page.drawText(pageNumber, {
+    x: (W - textWidth) / 2,
+    y: 15,
+    size: fontSize,
+    color: PDFLib.rgb(0.25, 0.25, 0.25)
+  });
+}
       }
 
       const bytes = await output.save();
