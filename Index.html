@@ -277,7 +277,7 @@ input[type=file] {
     pages.forEach((page, index) => {
       const card = document.createElement("div");
       card.className = "item";
-
+      const printPage= document.getElementById("usePageNumber");
       const preview = document.createElement("div");
       preview.className = "preview";
 
@@ -547,7 +547,7 @@ input[type=file] {
     try {
       const { PDFDocument, degrees } = PDFLib;
       const output = await PDFDocument.create();
-
+      const printPage= document.getElementById("usePageNumber");
       const option = $("paper").value;
       const landscape = option.endsWith("L");
       const letter = option.startsWith("Letter");
@@ -566,7 +566,8 @@ input[type=file] {
 
         const page = output.addPage([W, H]);
         const image = await output.embedPng(item.data);
-
+        page.moveTo(W/2, H/2);
+        page.drawText(i);
         const rotation = (item.rotation % 360 + 360) % 360;
 
         const boxW = W - 2 * margin;
